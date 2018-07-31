@@ -1,3 +1,8 @@
+---
+name: Bug report
+about: Create a report to help us improve
+---
+
 <!--- Provide a general summary of your issue in the Title above -->
 
 ## *Where* does it happen (platform and version details)?
