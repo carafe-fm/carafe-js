@@ -1,11 +1,14 @@
 "use strict";
 
+import 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'datatables.net';
 import 'datatables.net-dt/css/jquery.dataTables.css';
-import * as fmBridge from 'fm-webviewer-bridge'
-import carafeData from './ExampleData.json';
+import './lib/style.scss';
+import CarafeData from './ExampleData.json';
+import Carafe from '../../es6/lib/Carafe';
 
-window.carafeData = carafeData;
-window.fmBridge = fmBridge;
+const instance = new Carafe();
+instance.setData(CarafeData);
+module.exports = instance;

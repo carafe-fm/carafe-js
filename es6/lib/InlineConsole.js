@@ -4,7 +4,7 @@ import 'jquery.terminal';
 import 'jquery.terminal/css/jquery.terminal.css';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
-import './InlineConsole.css';
+import '../css/InlineConsole.css';
 
 export default class InlineConsole {
     constructor(options) {
