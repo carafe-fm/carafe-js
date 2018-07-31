@@ -33,7 +33,11 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import CarafeData from './ExampleData.json';
-window.CarafeData = CarafeData;
+import Carafe from '../../es6/lib/Carafe';
+
+const instance = new Carafe();
+instance.setData(CarafeData);
+module.exports = instance;
 END_TEXT
 fi
 

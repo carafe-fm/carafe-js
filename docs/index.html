@@ -22,9 +22,157 @@
         <main role="main" class="container">
             <h1 class="mt-5">Carafe Packages</h1>
             <p class="lead">Click a package below to view it in the browser.</p>
-            <div class="row row-striped"><div class="col-3"><span><h4>CarafeDataTables</h4></span></div><div class="col-2"> <a href="./carafe-packages-build/CarafeDataTables/Template.html" target="_blank">View Example</a></div><div class="col-7"> <a href="#" data-playground="jsfiddle" data-playground-from-group="CarafeDataTables" data-playground-resources="https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/CarafeDataTables/CarafeDataTables.bundle.js,https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/CarafeDataTables/CarafeDataTables.css">Edit in JS Fiddle</a><div style='display:none;'><pre data-playground-type='html' data-playground-group='CarafeDataTables'>&lt;!doctype html&gt;
+            <div class="row row-striped"><div class="col-3"><span><h4>CarafeD3</h4></span></div><div class="col-2"> <a href="./carafe-packages-build/CarafeD3/Template.html" target="_blank">View Example</a></div><div class="col-7"> <a href="#" data-playground="jsfiddle" data-playground-from-group="CarafeD3" data-playground-resources="https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/CarafeD3/CarafeD3.bundle.js,https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/CarafeD3/CarafeD3.css">Edit in JS Fiddle</a><div style='display:none;'><pre data-playground-type='html' data-playground-group='CarafeD3'>&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot;&gt;
+        &lt;!-- carafeZoneStart --&gt;
+        &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;./CarafeD3.css&quot;&gt;
+        &lt;script src=&quot;./CarafeD3.bundle.js&quot;&gt;&lt;/script&gt;
+        &lt;!-- carafeZoneEnd  --&gt;
+        &lt;style&gt;
+            .links line {
+                stroke: #999;
+                stroke-opacity: 0.6;
+            }
 
-&lt;html&gt;
+            .nodes circle {
+                stroke: #fff;
+                stroke-width: 1.5px;
+            }
+        &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;header&gt;
+            &lt;!-- Fixed navbar --&gt;
+            &lt;nav class=&quot;navbar navbar-expand-md navbar-dark fixed-top bg-dark&quot;&gt;
+                &lt;a class=&quot;navbar-brand&quot; href=&quot;/&quot;&gt;Carafe&lt;/a&gt;
+                &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarCollapse&quot;&gt;
+                    &lt;ul class=&quot;navbar-nav mr-auto&quot;&gt;
+                        &lt;li class=&quot;nav-item active&quot;&gt;
+                            &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Carafe D3.js Example&lt;/a&gt;
+                        &lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/div&gt;
+            &lt;/nav&gt;
+        &lt;/header&gt;
+
+        &lt;main role=&quot;main&quot; class=&quot;container&quot;&gt;
+            &lt;div class=&quot;row&quot;&gt;
+                &lt;div class=&quot;col-12&quot;&gt;
+                    &lt;div class=&quot;text-center&quot;&gt;
+                        &lt;h1&gt;Carafe D3.js Example&lt;/h1&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;row&quot;&gt;
+                &lt;div class=&quot;col-12&quot;&gt;
+                    &lt;svg width=&quot;960&quot; height=&quot;600&quot;&gt;&lt;/svg&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/main&gt;
+
+        &lt;footer class=&quot;footer&quot;&gt;
+            &lt;div class=&quot;container&quot;&gt;
+                &lt;span class=&quot;text-muted&quot;&gt;Soliant Consulting&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/footer&gt;
+    &lt;/body&gt;
+    &lt;script&gt;
+        var graph = Carafe.getData();
+
+        var svg = d3.select(&quot;svg&quot;),
+            width = +svg.attr(&quot;width&quot;),
+            height = +svg.attr(&quot;height&quot;);
+
+        var color = d3.scaleOrdinal(d3.schemeAccent);
+
+        var simulation = d3.forceSimulation()
+            .force(&quot;link&quot;, d3.forceLink().id(function (d) {
+                return d.id;
+            }))
+            .force(&quot;charge&quot;, d3.forceManyBody())
+            .force(&quot;center&quot;, d3.forceCenter(width / 2, height / 2));
+
+        var link = svg.append(&quot;g&quot;)
+            .attr(&quot;class&quot;, &quot;links&quot;)
+            .selectAll(&quot;line&quot;)
+            .data(graph.links)
+            .enter().append(&quot;line&quot;)
+            .attr(&quot;stroke-width&quot;, function (d) {
+                return Math.sqrt(d.value);
+            });
+
+        var node = svg.append(&quot;g&quot;)
+            .attr(&quot;class&quot;, &quot;nodes&quot;)
+            .selectAll(&quot;circle&quot;)
+            .data(graph.nodes)
+            .enter().append(&quot;circle&quot;)
+            .attr(&quot;r&quot;, 5)
+            .attr(&quot;fill&quot;, function (d) {
+                return color(d.group);
+            })
+            .call(d3.drag()
+                .on(&quot;start&quot;, dragstarted)
+                .on(&quot;drag&quot;, dragged)
+                .on(&quot;end&quot;, dragended));
+
+        node.append(&quot;title&quot;)
+            .text(function (d) {
+                return d.id;
+            });
+
+        simulation
+            .nodes(graph.nodes)
+            .on(&quot;tick&quot;, ticked);
+
+        simulation.force(&quot;link&quot;)
+            .links(graph.links);
+
+        function ticked() {
+            link
+                .attr(&quot;x1&quot;, function (d) {
+                    return d.source.x;
+                })
+                .attr(&quot;y1&quot;, function (d) {
+                    return d.source.y;
+                })
+                .attr(&quot;x2&quot;, function (d) {
+                    return d.target.x;
+                })
+                .attr(&quot;y2&quot;, function (d) {
+                    return d.target.y;
+                });
+
+            node
+                .attr(&quot;cx&quot;, function (d) {
+                    return d.x;
+                })
+                .attr(&quot;cy&quot;, function (d) {
+                    return d.y;
+                });
+        }
+
+        function dragstarted(d) {
+            if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+
+        function dragged(d) {
+            d.fx = d3.event.x;
+            d.fy = d3.event.y;
+        }
+
+        function dragended(d) {
+            if (!d3.event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+    &lt;/script&gt;
+&lt;/html&gt;
+</pre></div></div></div><div class="row row-striped"><div class="col-3"><span><h4>CarafeDataTables</h4></span></div><div class="col-2"> <a href="./carafe-packages-build/CarafeDataTables/Template.html" target="_blank">View Example</a></div><div class="col-7"> <a href="#" data-playground="jsfiddle" data-playground-from-group="CarafeDataTables" data-playground-resources="https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/CarafeDataTables/CarafeDataTables.bundle.js,https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/CarafeDataTables/CarafeDataTables.css">Edit in JS Fiddle</a><div style='display:none;'><pre data-playground-type='html' data-playground-group='CarafeDataTables'>&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
     &lt;head&gt;
         &lt;meta charset=&quot;utf-8&quot;&gt;
         &lt;!-- carafeZoneStart --&gt;
@@ -33,34 +181,104 @@
         &lt;!-- carafeZoneEnd  --&gt;
     &lt;/head&gt;
     &lt;body&gt;
-        &lt;div class=&quot;container &quot;&gt;
+        &lt;header&gt;
+            &lt;!-- Fixed navbar --&gt;
+            &lt;nav class=&quot;navbar navbar-expand-md navbar-dark fixed-top bg-dark&quot;&gt;
+                &lt;a class=&quot;navbar-brand&quot; href=&quot;/&quot;&gt;Carafe&lt;/a&gt;
+                &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarCollapse&quot;&gt;
+                    &lt;ul class=&quot;navbar-nav mr-auto&quot;&gt;
+                        &lt;li class=&quot;nav-item active&quot;&gt;
+                            &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;DataTables 1.10&lt;/a&gt;
+                        &lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/div&gt;
+            &lt;/nav&gt;
+        &lt;/header&gt;
+
+        &lt;main role=&quot;main&quot; class=&quot;container&quot;&gt;
             &lt;div class=&quot;row&quot;&gt;
                 &lt;div class=&quot;col-12&quot;&gt;
                     &lt;div class=&quot;text-center&quot;&gt;
-                        &lt;h2&gt;Soliant FileMaker / Javascript Table Management&lt;/h2&gt;
+                        &lt;h1&gt;Carafe DataTables.js Example&lt;/h1&gt;
                     &lt;/div&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
             &lt;div class=&quot;row&quot;&gt;
                 &lt;div class=&quot;col-12&quot;&gt;
-                    &lt;table id=&quot;example&quot; class=&quot;display compact display table table-striped table-bordered table-hover&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;&lt;/table&gt;
+                    &lt;h2&gt;Table One&lt;/h2&gt;
+                    &lt;p&gt;This table uses data rows formatted as plain JSON arrays like this:&lt;/p&gt;
+                    &lt;p&gt;&lt;code&gt;[&quot;Tiger Nixon's Mom&quot;, &quot;System Architect&quot;, &quot;Edinburgh&quot;, &quot;5421&quot;, &quot;2011/04/25&quot;, &quot;$320,800&quot;],&lt;/code&gt;&lt;/p&gt;
+                    &lt;p&gt;This table is also configured to have custom &quot;pageLength&quot; properties.&lt;/p&gt;
+                    &lt;table id=&quot;firstTable&quot; class=&quot;display compact display table table-striped table-bordered table-hover&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;&lt;/table&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
-        &lt;/div&gt;
+            &lt;div class=&quot;row&quot;&gt;
+                &lt;div class=&quot;col-12&quot;&gt;
+                    &lt;h2&gt;Table Two&lt;/h2&gt;
+                    &lt;p&gt;This table uses data rows formatted as JSON objects like this:&lt;/p&gt;
+                    &lt;p&gt;&lt;code&gt;{&quot;name&quot;: &quot;Tiger Nixon's Mom&quot;, &quot;position&quot;: &quot;System Architect&quot;, &quot;office&quot;: &quot;Edinburgh&quot;, &quot;extn&quot;: &quot;5421&quot;, &quot;startDate&quot;: &quot;2011/04/25&quot;, &quot;salary&quot;: &quot;$320,800&quot;},&lt;/code&gt;&lt;/p&gt;
+                    &lt;p&gt;This table is also configured to disable search via &quot;dom&quot; property, and it has a &quot;fmBridge&quot; callback function defined which triggers a FileMaker script when you click a row.&lt;/p&gt;
+                    &lt;table id=&quot;secondTable&quot; class=&quot;display compact display table table-striped table-bordered table-hover&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;&lt;/table&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/main&gt;
+
+        &lt;footer class=&quot;footer&quot;&gt;
+            &lt;div class=&quot;container&quot;&gt;
+                &lt;span class=&quot;text-muted&quot;&gt;Soliant Consulting&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/footer&gt;
     &lt;/body&gt;
+    &lt;style&gt;
+        h1 { font-size: 30px; }
+        h2 { font-size: 20px; border-top: 1px solid #ccc; margin-top: 1em; padding-top: 1em;  }
+    &lt;/style&gt;
     &lt;script type=&quot;text/javascript&quot;&gt;
+        // Quickstart Examples
         jQuery(document).ready(function () {
-            jQuery('#example').DataTable({
-                data: carafeData,
+
+            // Initialize the first table
+            jQuery('#firstTable').DataTable({
+                data: Carafe.getData().firstTable,
+                pageLength: 2,
+                lengthMenu: [ 2, 10, 25, 50 ],
                 columns: [
                     {title: &quot;Name&quot;},
                     {title: &quot;Position&quot;},
                     {title: &quot;Office&quot;},
                     {title: &quot;Extn.&quot;},
-                    {title: &quot;Start date&quot;},
+                    {title: &quot;Start Date&quot;},
                     {title: &quot;Salary&quot;}
                 ]
             });
+
+            // Initialize the second table and assign to a local variable for reference by the subsequent callback function below.
+            var secondTable = jQuery('#secondTable').DataTable({
+                data: Carafe.getData().secondTable,
+                dom: 'Brtip',
+                columns: [
+                    {data: &quot;position&quot;, title: &quot;Position&quot;},
+                    {data: &quot;name&quot;, title: &quot;Name&quot;},
+                    {data: &quot;extn&quot;, title: &quot;Extn.&quot;},
+                    {data: &quot;salary&quot;, title: &quot;Salary&quot;},
+                    {data: &quot;office&quot;, title: &quot;Office&quot;},
+                    {data: &quot;startDate&quot;, title: &quot;Start Date&quot;},
+                ]
+            });
+
+            // Load the callback function.
+            $('#secondTable tbody').on('click', 'tr', (e) =&gt; {
+                if (Carafe.isFileMakerWebViewer()) {
+                    let row = jQuery(e.target).closest('tr');
+                    let data = secondTable.row(jQuery(row)).data();
+                    Carafe.callFMScript('Carafe Example Implementation', 'MyScript', JSON.stringify(data));
+                } else {
+                    alert('If you were in FileMaker, this would run a script.');
+                }
+            });
+
+            // Optional call to enable the debugging console
+            // Carafe.enableConsole('main.container', 'nav.navbar');
         });
     &lt;/script&gt;
 &lt;/html&gt;
@@ -227,115 +445,13 @@
 
     &lt;/body&gt;
 &lt;/html&gt;
-</pre></div></div></div><div class="row row-striped"><div class="col-3"><span><h4>GroupItemOrdering</h4></span></div><div class="col-2"> <a href="./carafe-packages-build/GroupItemOrdering/Template.html" target="_blank">View Example</a></div><div class="col-7"> <a href="#" data-playground="jsfiddle" data-playground-from-group="GroupItemOrdering" data-playground-resources="https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/GroupItemOrdering/GroupItemOrdering.bundle.js,https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/GroupItemOrdering/GroupItemOrdering.css">Edit in JS Fiddle</a><div style='display:none;'><pre data-playground-type='html' data-playground-group='GroupItemOrdering'>&lt;!doctype html&gt;
-
+</pre></div></div></div><div class="row row-striped"><div class="col-3"><span><h4>CarafeFullCalendar</h4></span></div><div class="col-2"> <a href="./carafe-packages-build/CarafeFullCalendar/Template.html" target="_blank">View Example</a></div><div class="col-7"> <a href="#" data-playground="jsfiddle" data-playground-from-group="CarafeFullCalendar" data-playground-resources="https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/CarafeFullCalendar/CarafeFullCalendar.bundle.js,https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/CarafeFullCalendar/CarafeFullCalendar.css">Edit in JS Fiddle</a><div style='display:none;'><pre data-playground-type='html' data-playground-group='CarafeFullCalendar'>&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
     &lt;head&gt;
         &lt;meta charset=&quot;utf-8&quot;&gt;
         &lt;!-- carafeZoneStart --&gt;
-        &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;./GroupItemOrdering.css&quot;&gt;
-        &lt;script src=&quot;./GroupItemOrdering.bundle.js&quot;&gt;&lt;/script&gt;
-        &lt;!-- carafeZoneEnd  --&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        &lt;section id=&quot;container&quot; class=&quot;mb3 mx-auto col col-12&quot;&gt;
-            &lt;div id=&quot;col1&quot; class=&quot;p3 bg-white orange col col-6&quot;&gt;
-                &lt;ul class=&quot;js-sortable-connected list flex flex-column list-reset&quot;&gt;
-                    &lt;li class=&quot;disabled p1 mb1 border border-white white bg-silver cardmargin&quot;&gt;
-                        &lt;div id=&quot;searchli&quot;&gt;
-                            &lt;input id=&quot;searchfield&quot; class=&quot;search&quot; placeholder=&quot;Filter items&quot; onkeyup=&quot;filterItemList()&quot;/&gt;
-                            &lt;ul id=&quot;itemslist&quot;
-                                class=&quot;list js-sortable-inner-connected list flex flex-column list-reset m0 py1&quot;&gt;&lt;/ul&gt;
-                        &lt;/div&gt;
-                    &lt;/li&gt;
-                &lt;/ul&gt;
-                &lt;br&gt;
-                &lt;button class=&quot;exportContents&quot;&gt;Export&lt;/button&gt;
-                &lt;br&gt;
-                &lt;code class=&quot;exportContents&quot;&gt;&lt;/code&gt;
-            &lt;/div&gt;
-            &lt;div id=&quot;col2&quot; class=&quot;p3 bg-very-light-gray white col col-6&quot;&gt;
-                &lt;ul class=&quot;js-sortable-connected list flex flex-column list-reset&quot;&gt;
-                    &lt;li data-type=&quot;group&quot; data-id=&quot;1&quot; class=&quot;p1 mb1 bg-white cardshadow cardmargin&quot;&gt;
-                        &lt;div class=&quot;cardlabel&quot;&gt;Group 1&lt;/div&gt;
-                        &lt;ul class=&quot;js-sortable-inner-connected list flex flex-column list-reset mb0 py1&quot;&gt;&lt;/ul&gt;
-                    &lt;/li&gt;
-                    &lt;li data-type=&quot;group&quot; data-id=&quot;2&quot; class=&quot;p1 mb1 bg-white cardshadow cardmargin&quot;&gt;
-                        &lt;div class=&quot;cardlabel&quot;&gt;Group 2&lt;/div&gt;
-                        &lt;ul class=&quot;js-sortable-inner-connected list flex flex-column list-reset mb0 py1&quot;&gt;&lt;/ul&gt;
-                    &lt;/li&gt;
-                    &lt;li data-type=&quot;group&quot; data-id=&quot;3&quot; class=&quot;p1 mb1 bg-white cardshadow cardmargin&quot;&gt;
-                        &lt;div class=&quot;cardlabel&quot;&gt;Group 3&lt;/div&gt;
-                        &lt;ul class=&quot;js-sortable-inner-connected list flex flex-column list-reset mb0 py1&quot;&gt;&lt;/ul&gt;
-                    &lt;/li&gt;
-                    &lt;li data-type=&quot;group&quot; data-id=&quot;4&quot; class=&quot;p1 mb1 bg-white cardshadow cardmargin&quot;&gt;
-                        &lt;div class=&quot;cardlabel&quot;&gt;Group 4&lt;/div&gt;
-                        &lt;ul class=&quot;js-sortable-inner-connected list flex flex-column list-reset mb0 py1&quot;&gt;&lt;/ul&gt;
-                    &lt;/li&gt;
-                    &lt;li data-type=&quot;group&quot; data-id=&quot;5&quot; class=&quot;p1 mb1 bg-white cardshadow cardmargin&quot;&gt;
-                        &lt;div class=&quot;cardlabel&quot;&gt;Group 5&lt;/div&gt;
-                        &lt;ul class=&quot;js-sortable-inner-connected list flex flex-column list-reset mb0 py1&quot;&gt;&lt;/ul&gt;
-                    &lt;/li&gt;
-
-                &lt;/ul&gt;
-            &lt;/div&gt;
-        &lt;/section&gt;
-    &lt;/body&gt;
-    &lt;script type=&quot;text/javascript&quot;&gt;
-        function filterItemList() {
-            let input, filter, ul, li, a, i;
-            input = document.getElementById(&quot;searchfield&quot;);
-            filter = input.value.toUpperCase();
-            ul = document.getElementById(&quot;itemslist&quot;);
-            li = ul.getElementsByTagName(&quot;li&quot;);
-            for (i = 0; i &lt; li.length; i++) {
-                a = li[i].getElementsByTagName(&quot;td&quot;)[0];
-                b = li[i].getElementsByTagName(&quot;td&quot;)[1];
-                c = li[i].getElementsByTagName(&quot;td&quot;)[2];
-                d = li[i].getElementsByTagName(&quot;td&quot;)[3];
-                if (a.innerHTML.toUpperCase().indexOf(filter) &gt; -1 || b.innerHTML.toUpperCase().indexOf(filter) &gt; -1 || c.innerHTML.toUpperCase().indexOf(filter) &gt; -1 || d.innerHTML.toUpperCase().indexOf(filter) &gt; -1
-                ) {
-                    li[i].style.display = &quot;&quot;;
-                } else {
-                    li[i].style.display = &quot;none&quot;;
-                }
-            }
-        }
-
-        function exportIds() {
-            let idlist = [];
-            jQuery.each(jQuery(&quot;#col2 li&quot;), function(i, item) {
-                let id = jQuery(item).data(&quot;id&quot;);
-                let type = jQuery(item).data(&quot;type&quot;);
-                idlist.push(type + &quot; &quot; + id);
-            });
-            updatelist = idlist.join(&quot;,&quot;);
-
-            jQuery('code.exportContents').html(JSON.stringify(idlist,null,'&lt;br&gt;'));
-
-            //Create fmp URL to run a script in FileMaker with idlist as the parameter
-            //FileMaker will then parse to create group (parent) records and item (child) records
-            //idlist should be JSON formatted, but I can't figure out how to do it.
-            //	fmFileName ='fileName';
-            //	fmScriptName = 'scriptName';
-            //	theURL = 'fmp://$/' + fileName + '?script=' + scriptName + '&amp;$param=' + idlist ;
-            //  	window.location = theURL ;
-        }
-
-        new GroupItemOrganizer(carafeData);
-
-        jQuery('button.exportContents').on('click', (e) =&gt; {
-            exportIds();
-        })
-    &lt;/script&gt;
-&lt;/html&gt;</pre></div></div></div><div class="row row-striped"><div class="col-3"><span><h4>ImageExample</h4></span></div><div class="col-2"> <a href="./carafe-packages-build/ImageExample/Template.html" target="_blank">View Example</a></div><div class="col-7"> <a href="#" data-playground="jsfiddle" data-playground-from-group="ImageExample" data-playground-resources="https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/ImageExample/ImageExample.bundle.js,https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/ImageExample/ImageExample.css">Edit in JS Fiddle</a><div style='display:none;'><pre data-playground-type='html' data-playground-group='ImageExample'>&lt;!doctype html&gt;
-
-&lt;html lang=&quot;en&quot;&gt;
-    &lt;head&gt;
-        &lt;meta charset=&quot;utf-8&quot;&gt;
-        &lt;!-- carafeZoneStart --&gt;
-        &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;./ImageExample.css&quot;&gt;
-        &lt;script src=&quot;./ImageExample.bundle.js&quot;&gt;&lt;/script&gt;
+        &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;./CarafeFullCalendar.css&quot;&gt;
+        &lt;script src=&quot;./CarafeFullCalendar.bundle.js&quot;&gt;&lt;/script&gt;
         &lt;!-- carafeZoneEnd  --&gt;
     &lt;/head&gt;
     &lt;body&gt;
@@ -346,7 +462,7 @@
                 &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarCollapse&quot;&gt;
                     &lt;ul class=&quot;navbar-nav mr-auto&quot;&gt;
                         &lt;li class=&quot;nav-item active&quot;&gt;
-                            &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Image Include Example &lt;span class=&quot;sr-only&quot;&gt;(current)&lt;/span&gt;&lt;/a&gt;
+                            &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Carafe FullCalendar.io Example&lt;/a&gt;
                         &lt;/li&gt;
                     &lt;/ul&gt;
                 &lt;/div&gt;
@@ -357,18 +473,13 @@
             &lt;div class=&quot;row&quot;&gt;
                 &lt;div class=&quot;col-12&quot;&gt;
                     &lt;div class=&quot;text-center&quot;&gt;
-                        &lt;h2&gt;Image Include Example&lt;/h2&gt;
+                        &lt;h1&gt;Carafe FullCalendar.io Example&lt;/h1&gt;
                     &lt;/div&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
             &lt;div class=&quot;row&quot;&gt;
                 &lt;div class=&quot;col-12&quot;&gt;
-                    &lt;div id=&quot;png&quot;&gt;&lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class=&quot;row&quot;&gt;
-                &lt;div class=&quot;col-12&quot;&gt;
-                    &lt;div id=&quot;jpg&quot;&gt;&lt;/div&gt;
+                    &lt;div id='calendar'&gt;&lt;/div&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
         &lt;/main&gt;
@@ -378,94 +489,11 @@
                 &lt;span class=&quot;text-muted&quot;&gt;Soliant Consulting&lt;/span&gt;
             &lt;/div&gt;
         &lt;/footer&gt;
+
+        &lt;script&gt;
+            $('#calendar').fullCalendar(Carafe.getData());
+        &lt;/script&gt;
     &lt;/body&gt;
-&lt;/html&gt;
-</pre></div></div></div><div class="row row-striped"><div class="col-3"><span><h4>InlineConsole</h4></span></div><div class="col-2"> <a href="./carafe-packages-build/InlineConsole/Template.html" target="_blank">View Example</a></div><div class="col-7"> <a href="#" data-playground="jsfiddle" data-playground-from-group="InlineConsole" data-playground-resources="https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/InlineConsole/InlineConsole.bundle.js,https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/InlineConsole/InlineConsole.css">Edit in JS Fiddle</a><div style='display:none;'><pre data-playground-type='html' data-playground-group='InlineConsole'>&lt;!doctype html&gt;
-
-&lt;html lang=&quot;en&quot;&gt;
-    &lt;head&gt;
-        &lt;meta charset=&quot;utf-8&quot;&gt;
-        &lt;!-- carafeZoneStart --&gt;
-        &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;./InlineConsole.css&quot;&gt;
-        &lt;script src=&quot;./InlineConsole.bundle.js&quot;&gt;&lt;/script&gt;
-        &lt;!-- carafeZoneEnd  --&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        &lt;header&gt;
-            &lt;!-- Fixed navbar --&gt;
-            &lt;nav class=&quot;navbar navbar-expand-md navbar-dark fixed-top bg-dark&quot;&gt;
-                &lt;a class=&quot;navbar-brand&quot; href=&quot;/&quot;&gt;Carafe&lt;/a&gt;
-                &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarCollapse&quot;&gt;
-                    &lt;ul class=&quot;navbar-nav mr-auto&quot;&gt;
-                        &lt;li class=&quot;nav-item active&quot;&gt;
-                            &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Inline Console &lt;span class=&quot;sr-only&quot;&gt;(current)&lt;/span&gt;&lt;/a&gt;
-                        &lt;/li&gt;
-                    &lt;/ul&gt;
-                &lt;/div&gt;
-            &lt;/nav&gt;
-        &lt;/header&gt;
-
-        &lt;main role=&quot;main&quot; class=&quot;container&quot;&gt;
-            &lt;div class=&quot;row&quot;&gt;
-                &lt;div class=&quot;col-12&quot;&gt;
-                    &lt;h1 class=&quot;mt-5&quot;&gt;Inline Console&lt;/h1&gt;
-                    &lt;p class=&quot;lead&quot;&gt;
-                        Inline Console designed to extend the console.log and console.debug functions by
-                        piping their content to a div on the page so they can be viewed in situations where the log
-                        is inaccessible, i.e. FileMaker.
-                    &lt;/p&gt;
-                    &lt;p class=&quot;lead&quot;&gt;
-                        Click the FMJS link in the upper right corner and then click the links below to
-                        see the output.
-                    &lt;/p&gt;
-                    &lt;ul class=&quot;list-group list-group-flush&quot;&gt;
-                        &lt;li class=&quot;list-group-item&quot; onClick=&quot;console.log('Hello world!')&quot;&gt;&lt;a href=&quot;#&quot;&gt;&lt;code&gt;console.log('Hello world!');&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-                        &lt;li class=&quot;list-group-item&quot; onClick=&quot;console.log('Its alive!')&quot;&gt;&lt;a href=&quot;#&quot;&gt;&lt;code&gt;console.log(&quot;It's alive!&quot;);&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-                        &lt;li class=&quot;list-group-item&quot; onClick=&quot;console.log(jQuery('nav'))&quot;&gt;&lt;a href=&quot;#&quot;&gt;&lt;code&gt;console.debug(jQuery('nav'));&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-                    &lt;/ul&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/main&gt;
-
-        &lt;footer class=&quot;footer&quot;&gt;
-            &lt;div class=&quot;container&quot;&gt;
-                &lt;span class=&quot;text-muted&quot;&gt;Soliant Consulting&lt;/span&gt;
-            &lt;/div&gt;
-        &lt;/footer&gt;
-    &lt;/body&gt;
-&lt;/html&gt;
-</pre></div></div></div><div class="row row-striped"><div class="col-3"><span><h4>SoliantBurndownChart</h4></span></div><div class="col-2"> <a href="./carafe-packages-build/SoliantBurndownChart/Template.html" target="_blank">View Example</a></div><div class="col-7"> <a href="#" data-playground="jsfiddle" data-playground-from-group="SoliantBurndownChart" data-playground-resources="https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/SoliantBurndownChart/SoliantBurndownChart.bundle.js,https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/SoliantBurndownChart/SoliantBurndownChart.css">Edit in JS Fiddle</a><div style='display:none;'><pre data-playground-type='html' data-playground-group='SoliantBurndownChart'>&lt;!doctype html&gt;
-
-&lt;html lang=&quot;en&quot;&gt;
-    &lt;head&gt;
-        &lt;meta charset=&quot;utf-8&quot;&gt;
-        &lt;!-- carafeZoneStart --&gt;
-        &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;./SoliantBurndownChart.css&quot;&gt;
-        &lt;script src=&quot;./SoliantBurndownChart.bundle.js&quot;&gt;&lt;/script&gt;
-        &lt;!-- carafeZoneEnd  --&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        &lt;div class=&quot;container &quot;&gt;
-            &lt;div class=&quot;row&quot;&gt;
-                &lt;div class=&quot;col-12&quot;&gt;
-                    &lt;div class=&quot;text-center&quot;&gt;
-                        &lt;h2&gt;Soliant Burndown Chart&lt;/h2&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class=&quot;row&quot;&gt;
-                &lt;div class=&quot;col-12&quot;&gt;
-                    &lt;div id=&quot;chart&quot; style=&quot;position:absolute;top:0px;left:0; float:left; width:300px; height:60px;&quot;&gt;&lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/body&gt;
-    &lt;script type=&quot;text/javascript&quot;&gt;
-        window.onload = function () {
-            let thisChart = new D3BurndownChart('#chart', CarafeData.options);
-            thisChart.render(CarafeData.startDate, CarafeData.data);
-        }
-    &lt;/script&gt;
 &lt;/html&gt;
 </pre></div></div></div>        </main>
 
