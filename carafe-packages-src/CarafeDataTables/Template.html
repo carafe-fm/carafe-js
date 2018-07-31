@@ -1,6 +1,5 @@
 <!doctype html>
-
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <!-- carafeZoneStart -->
@@ -9,7 +8,21 @@
         <!-- carafeZoneEnd  -->
     </head>
     <body>
-        <div class="container ">
+        <header>
+            <!-- Fixed navbar -->
+            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <a class="navbar-brand" href="/">Carafe</a>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">DataTables 1.10</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <main role="main" class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="text-center">
@@ -21,7 +34,7 @@
                 <div class="col-12">
                     <h2>Table One</h2>
                     <p>This table uses data rows formatted as plain JSON arrays like this:</p>
-                    <p><pre>["Tiger Nixon's Mom", "System Architect", "Edinburgh", "5421", "2011/04/25", "$320,800"],</pre></p>
+                    <p><code>["Tiger Nixon's Mom", "System Architect", "Edinburgh", "5421", "2011/04/25", "$320,800"],</code></p>
                     <p>This table is also configured to have custom "pageLength" properties.</p>
                     <table id="firstTable" class="display compact display table table-striped table-bordered table-hover" cellspacing="0" width="100%"></table>
                 </div>
@@ -30,20 +43,18 @@
                 <div class="col-12">
                     <h2>Table Two</h2>
                     <p>This table uses data rows formatted as JSON objects like this:</p>
-                    <p><pre>
-                    {
-                    "name": "Tiger Nixon's Mom",
-                    "position": "System Architect",
-                    "office": "Edinburgh",
-                    "extn": "5421",
-                    "startDate": "2011/04/25",
-                    "salary": "$320,800"
-                    },</pre></p>
+                    <p><code>{"name": "Tiger Nixon's Mom", "position": "System Architect", "office": "Edinburgh", "extn": "5421", "startDate": "2011/04/25", "salary": "$320,800"},</code></p>
                     <p>This table is also configured to disable search via "dom" property, and it has a "fmBridge" callback function defined which triggers a FileMaker script when you click a row.</p>
                     <table id="secondTable" class="display compact display table table-striped table-bordered table-hover" cellspacing="0" width="100%"></table>
                 </div>
             </div>
-        </div>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <span class="text-muted">Soliant Consulting</span>
+            </div>
+        </footer>
     </body>
     <style>
         h1 { font-size: 30px; }
@@ -52,8 +63,10 @@
     <script type="text/javascript">
         // Quickstart Examples
         jQuery(document).ready(function () {
+
+            // Initialize the first table
             jQuery('#firstTable').DataTable({
-                data: carafeData.firstTable,
+                data: Carafe.getData().firstTable,
                 pageLength: 2,
                 lengthMenu: [ 2, 10, 25, 50 ],
                 columns: [
@@ -66,8 +79,9 @@
                 ]
             });
 
+            // Initialize the second table and assign to a local variable for reference by the subsequent callback function below.
             var secondTable = jQuery('#secondTable').DataTable({
-                data: carafeData.secondTable,
+                data: Carafe.getData().secondTable,
                 dom: 'Brtip',
                 columns: [
                     {data: "position", title: "Position"},
@@ -79,13 +93,19 @@
                 ]
             });
 
+            // Load the callback function.
             $('#secondTable tbody').on('click', 'tr', (e) => {
-                let row = jQuery(e.target).closest('tr');
-                let data = secondTable.row(jQuery(row)).data();
-                // window.fmBridge.callFMScript('Carafe Example Implementation', 'MyScript', JSON.stringify(data));
-                self.location = "fmp://$/Carafe Example Implementation?script=MyScript&param=" + JSON.stringify(data);
+                if (Carafe.isFileMakerWebViewer()) {
+                    let row = jQuery(e.target).closest('tr');
+                    let data = secondTable.row(jQuery(row)).data();
+                    Carafe.callFMScript('Carafe Example Implementation', 'MyScript', JSON.stringify(data));
+                } else {
+                    alert('If you were in FileMaker, this would run a script.');
+                }
             });
+
+            // Optional call to enable the debugging console
+            // Carafe.enableConsole('main.container', 'nav.navbar');
         });
     </script>
 </html>
-

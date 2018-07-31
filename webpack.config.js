@@ -71,6 +71,7 @@ module.exports = (env, options) => {
         output: {
             path: outputPath,
             filename: '[name]/[name].bundle.js',
+            library: 'Carafe',
             publicPath: '/',
         },
         plugins: plugins,
