@@ -1,3 +1,7 @@
+---
+name: Feature request
+about: Request a new package or a new feature on an existing pacakge
+---
 <!--- Provide a general summary of your issue in the Title above -->
 
 ## Basic description of the proposed feature
