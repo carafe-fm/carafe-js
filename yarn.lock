@@ -3572,10 +3572,6 @@ glogg@^1.0.0:
   dependencies:
     sparkles "^1.0.0"
 
-gojs@NorthwoodsSoftware/GoJS:
-  version "1.8.26"
-  resolved "https://codeload.github.com/NorthwoodsSoftware/GoJS/tar.gz/29c32fa80a12aca9bc2553d4c76424d1e089dad1"
-
 got@^5.0.0:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/got/-/got-5.7.1.tgz#5f81635a61e4a6589f180569ea4e381680a51f35"
@@ -4595,6 +4591,12 @@ jsprim@^1.2.2:
     extsprintf "1.3.0"
     json-schema "0.2.3"
     verror "1.10.0"
+
+justifiedGallery@^3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/justifiedGallery/-/justifiedGallery-3.7.0.tgz#794401e455d1e4b62de2081e8843fbc30ea4cbfd"
+  dependencies:
+    jquery "^3.3.1"
 
 keyv@3.0.0:
   version "3.0.0"
