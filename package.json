@@ -47,6 +47,7 @@
     "jquery-mask-plugin": "^1.14.12",
     "jquery.cookie": "carhartl/jquery-cookie",
     "jquery.terminal": "^1.16.1",
+    "justifiedGallery": "^3.7.0",
     "list.js": "^1.5.0",
     "material-design-lite": "google/material-design-lite",
     "mini-css-extract-plugin": "^0.4.0",

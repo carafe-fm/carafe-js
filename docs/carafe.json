@@ -1,14 +1,15 @@
 {
     "name": "Carafe Package Manifest",
-    "version": "0.0.2",
+    "version": "0.0.4",
     "packages": [
+        "Carafe",
         "CarafeD3",
-        "CarafeFullCalendar",
         "CarafeDataTables",
-        "CarafeFontAwesome"
+        "CarafeFontAwesome",
+        "CarafeFullCalendar",
+        "CarafeJustifiedGallery"
     ],
     "roadmap": [
-        "CarafeJustifiedOrSimilar",
         "CarafeSheetJS",
         "CarafeTbdImageCreationAndSaving",
         "CarafeEmbeddedImageExample"

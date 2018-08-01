@@ -51,6 +51,33 @@ if (php_sapi_name() == "cli") {
                 echo "</div>";
             }
             ?>
+
+            <?php
+            $dir = new DirectoryIterator('./carafe-packages-build/');
+            foreach ($dir as $fileinfo) {
+                if ($fileinfo->isDir() && ! $fileinfo->isDot() && 'CarafeHomePage' !== $fileinfo->getFilename() && false === array_search($fileinfo->getFilename(), $json['packages'])) {
+                    echo '<div class="row row-striped">';
+                    echo '<div class="col-3">';
+                    echo '<span><h4>' . $fileinfo->getFilename() . '</h4></span>';
+                    echo "</div>";
+                    echo '<div class="col-2">';
+                    echo ' <a href="./carafe-packages-build/' . $fileinfo->getFilename() . '/Template.html' . '" target="_blank">View Example</a>';
+                    echo "</div>";
+                    echo '<div class="col-7">';
+                    echo ' <a href="#" data-playground="jsfiddle" data-playground-from-group="' . $fileinfo->getFilename() . '" ' .
+                        'data-playground-resources="' .
+                        'https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/' . $fileinfo->getFilename() . '/' . $fileinfo->getFilename() . '.bundle.js,' .
+                        'https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/' . $fileinfo->getFilename() . '/' . $fileinfo->getFilename() . '.css">Edit in JS Fiddle</a>';
+                    echo "<div style='display:none;'>";
+                    echo "<pre data-playground-type='html' data-playground-group='" . $fileinfo->getFilename() . "'>";
+                    echo htmlentities(file_get_contents($fileinfo->getPathname() . '/Template.html'));
+                    echo '</pre>';
+                    echo "</div>";
+                    echo "</div>";
+                    echo "</div>";
+                }
+            }
+            ?>
         </main>
 
         <footer class="footer">
@@ -67,5 +94,5 @@ if (php_sapi_name() == "cli") {
     ob_end_clean();
     file_put_contents(realpath(__DIR__ . '/../public/') . '/index.html', $html);
     file_put_contents(realpath(__DIR__ . '/../docs/') . '/index.html', $html);
-    echo "index.html has been generated\n";
+    echo "index.html has been generated.\n";
 }
