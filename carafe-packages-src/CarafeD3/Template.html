@@ -42,8 +42,19 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
-                    <svg width="960" height="600"></svg>
+                <div class="col-6">
+                    The graph below is taken from the d3 <a href="https://bl.ocks.org/mbostock/4062045">Force-Directed Graph</a> on the d3 examples page.
+                </div>
+                <div class="col-6">
+                    Output of the data being rendered.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <svg width="500" height="600" style="background-color: #F5F5F5"></svg>
+                </div>
+                <div class="col-6">
+                    <pre class="json" style="max-height: 600px;overflow-y: scroll;background-color: #F5F5F5"></pre>
                 </div>
             </div>
         </main>
@@ -55,6 +66,8 @@
         </footer>
     </body>
     <script>
+        jQuery('.json').html(JSON.stringify(Carafe.getData(), undefined, 2));
+
         var graph = Carafe.getData();
 
         var svg = d3.select("svg"),
