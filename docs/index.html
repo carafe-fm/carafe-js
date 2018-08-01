@@ -22,7 +22,7 @@
         <main role="main" class="container">
             <h1 class="mt-5">Carafe Packages</h1>
             <p class="lead">Click a package below to view it in the browser.</p>
-            <div class="row row-striped"><div class="col-3"><span><h4>CarafeD3</h4></span></div><div class="col-2"> <a href="./carafe-packages-build/CarafeD3/Template.html" target="_blank">View Example</a></div><div class="col-7"> <a href="#" data-playground="jsfiddle" data-playground-from-group="CarafeD3" data-playground-resources="https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/CarafeD3/CarafeD3.bundle.js,https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/CarafeD3/CarafeD3.css">Edit in JS Fiddle</a><div style='display:none;'><pre data-playground-type='html' data-playground-group='CarafeD3'>&lt;!doctype html&gt;
+            <div class="row row-striped"><div class="col-3"><span><h4>CarafeD3</h4></span></div><div class="col-2"> <a href="./carafe-packages-build/CarafeD3/Template.html" target="_blank">View Example</a></div><div class="col-7"> <a href="#" data-playground="jsfiddle" data-playground-from-group="CarafeD3" data-playground-resources="https://cdn.rawgit.com/soliantconsulting/carafe/0.0.2/carafe-package/CarafeD3/CarafeD3.bundle.js,https://cdn.rawgit.com/soliantconsulting/carafe/0.0.2/carafe-package/CarafeD3/CarafeD3.css">Edit in JS Fiddle</a><div style='display:none;'><pre data-playground-type='html' data-playground-group='CarafeD3'>&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
     &lt;head&gt;
         &lt;meta charset=&quot;utf-8&quot;&gt;
@@ -171,7 +171,57 @@
         }
     &lt;/script&gt;
 &lt;/html&gt;
-</pre></div></div></div><div class="row row-striped"><div class="col-3"><span><h4>CarafeDataTables</h4></span></div><div class="col-2"> <a href="./carafe-packages-build/CarafeDataTables/Template.html" target="_blank">View Example</a></div><div class="col-7"> <a href="#" data-playground="jsfiddle" data-playground-from-group="CarafeDataTables" data-playground-resources="https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/CarafeDataTables/CarafeDataTables.bundle.js,https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/CarafeDataTables/CarafeDataTables.css">Edit in JS Fiddle</a><div style='display:none;'><pre data-playground-type='html' data-playground-group='CarafeDataTables'>&lt;!doctype html&gt;
+</pre></div></div></div><div class="row row-striped"><div class="col-3"><span><h4>CarafeFullCalendar</h4></span></div><div class="col-2"> <a href="./carafe-packages-build/CarafeFullCalendar/Template.html" target="_blank">View Example</a></div><div class="col-7"> <a href="#" data-playground="jsfiddle" data-playground-from-group="CarafeFullCalendar" data-playground-resources="https://cdn.rawgit.com/soliantconsulting/carafe/0.0.2/carafe-package/CarafeFullCalendar/CarafeFullCalendar.bundle.js,https://cdn.rawgit.com/soliantconsulting/carafe/0.0.2/carafe-package/CarafeFullCalendar/CarafeFullCalendar.css">Edit in JS Fiddle</a><div style='display:none;'><pre data-playground-type='html' data-playground-group='CarafeFullCalendar'>&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot;&gt;
+        &lt;!-- carafeZoneStart --&gt;
+        &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;./CarafeFullCalendar.css&quot;&gt;
+        &lt;script src=&quot;./CarafeFullCalendar.bundle.js&quot;&gt;&lt;/script&gt;
+        &lt;!-- carafeZoneEnd  --&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;header&gt;
+            &lt;!-- Fixed navbar --&gt;
+            &lt;nav class=&quot;navbar navbar-expand-md navbar-dark fixed-top bg-dark&quot;&gt;
+                &lt;a class=&quot;navbar-brand&quot; href=&quot;/&quot;&gt;Carafe&lt;/a&gt;
+                &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarCollapse&quot;&gt;
+                    &lt;ul class=&quot;navbar-nav mr-auto&quot;&gt;
+                        &lt;li class=&quot;nav-item active&quot;&gt;
+                            &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Carafe FullCalendar.io Example&lt;/a&gt;
+                        &lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/div&gt;
+            &lt;/nav&gt;
+        &lt;/header&gt;
+
+        &lt;main role=&quot;main&quot; class=&quot;container&quot;&gt;
+            &lt;div class=&quot;row&quot;&gt;
+                &lt;div class=&quot;col-12&quot;&gt;
+                    &lt;div class=&quot;text-center&quot;&gt;
+                        &lt;h1&gt;Carafe FullCalendar.io Example&lt;/h1&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;row&quot;&gt;
+                &lt;div class=&quot;col-12&quot;&gt;
+                    &lt;div id='calendar'&gt;&lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/main&gt;
+
+        &lt;footer class=&quot;footer&quot;&gt;
+            &lt;div class=&quot;container&quot;&gt;
+                &lt;span class=&quot;text-muted&quot;&gt;Soliant Consulting&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/footer&gt;
+
+        &lt;script&gt;
+            $('#calendar').fullCalendar(Carafe.getData());
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre></div></div></div><div class="row row-striped"><div class="col-3"><span><h4>CarafeDataTables</h4></span></div><div class="col-2"> <a href="./carafe-packages-build/CarafeDataTables/Template.html" target="_blank">View Example</a></div><div class="col-7"> <a href="#" data-playground="jsfiddle" data-playground-from-group="CarafeDataTables" data-playground-resources="https://cdn.rawgit.com/soliantconsulting/carafe/0.0.2/carafe-package/CarafeDataTables/CarafeDataTables.bundle.js,https://cdn.rawgit.com/soliantconsulting/carafe/0.0.2/carafe-package/CarafeDataTables/CarafeDataTables.css">Edit in JS Fiddle</a><div style='display:none;'><pre data-playground-type='html' data-playground-group='CarafeDataTables'>&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
     &lt;head&gt;
         &lt;meta charset=&quot;utf-8&quot;&gt;
@@ -282,7 +332,7 @@
         });
     &lt;/script&gt;
 &lt;/html&gt;
-</pre></div></div></div><div class="row row-striped"><div class="col-3"><span><h4>CarafeFontAwesome</h4></span></div><div class="col-2"> <a href="./carafe-packages-build/CarafeFontAwesome/Template.html" target="_blank">View Example</a></div><div class="col-7"> <a href="#" data-playground="jsfiddle" data-playground-from-group="CarafeFontAwesome" data-playground-resources="https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/CarafeFontAwesome/CarafeFontAwesome.bundle.js,https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/CarafeFontAwesome/CarafeFontAwesome.css">Edit in JS Fiddle</a><div style='display:none;'><pre data-playground-type='html' data-playground-group='CarafeFontAwesome'>&lt;!doctype html&gt;
+</pre></div></div></div><div class="row row-striped"><div class="col-3"><span><h4>CarafeFontAwesome</h4></span></div><div class="col-2"> <a href="./carafe-packages-build/CarafeFontAwesome/Template.html" target="_blank">View Example</a></div><div class="col-7"> <a href="#" data-playground="jsfiddle" data-playground-from-group="CarafeFontAwesome" data-playground-resources="https://cdn.rawgit.com/soliantconsulting/carafe/0.0.2/carafe-package/CarafeFontAwesome/CarafeFontAwesome.bundle.js,https://cdn.rawgit.com/soliantconsulting/carafe/0.0.2/carafe-package/CarafeFontAwesome/CarafeFontAwesome.css">Edit in JS Fiddle</a><div style='display:none;'><pre data-playground-type='html' data-playground-group='CarafeFontAwesome'>&lt;!doctype html&gt;
 
 &lt;html lang=&quot;en&quot;&gt;
     &lt;head&gt;
@@ -443,56 +493,6 @@
             &lt;/div&gt;
         &lt;/footer&gt;
 
-    &lt;/body&gt;
-&lt;/html&gt;
-</pre></div></div></div><div class="row row-striped"><div class="col-3"><span><h4>CarafeFullCalendar</h4></span></div><div class="col-2"> <a href="./carafe-packages-build/CarafeFullCalendar/Template.html" target="_blank">View Example</a></div><div class="col-7"> <a href="#" data-playground="jsfiddle" data-playground-from-group="CarafeFullCalendar" data-playground-resources="https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/CarafeFullCalendar/CarafeFullCalendar.bundle.js,https://cdn.rawgit.com/soliantconsulting/carafe/master/carafe-package/CarafeFullCalendar/CarafeFullCalendar.css">Edit in JS Fiddle</a><div style='display:none;'><pre data-playground-type='html' data-playground-group='CarafeFullCalendar'>&lt;!doctype html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-    &lt;head&gt;
-        &lt;meta charset=&quot;utf-8&quot;&gt;
-        &lt;!-- carafeZoneStart --&gt;
-        &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;./CarafeFullCalendar.css&quot;&gt;
-        &lt;script src=&quot;./CarafeFullCalendar.bundle.js&quot;&gt;&lt;/script&gt;
-        &lt;!-- carafeZoneEnd  --&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        &lt;header&gt;
-            &lt;!-- Fixed navbar --&gt;
-            &lt;nav class=&quot;navbar navbar-expand-md navbar-dark fixed-top bg-dark&quot;&gt;
-                &lt;a class=&quot;navbar-brand&quot; href=&quot;/&quot;&gt;Carafe&lt;/a&gt;
-                &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarCollapse&quot;&gt;
-                    &lt;ul class=&quot;navbar-nav mr-auto&quot;&gt;
-                        &lt;li class=&quot;nav-item active&quot;&gt;
-                            &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Carafe FullCalendar.io Example&lt;/a&gt;
-                        &lt;/li&gt;
-                    &lt;/ul&gt;
-                &lt;/div&gt;
-            &lt;/nav&gt;
-        &lt;/header&gt;
-
-        &lt;main role=&quot;main&quot; class=&quot;container&quot;&gt;
-            &lt;div class=&quot;row&quot;&gt;
-                &lt;div class=&quot;col-12&quot;&gt;
-                    &lt;div class=&quot;text-center&quot;&gt;
-                        &lt;h1&gt;Carafe FullCalendar.io Example&lt;/h1&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class=&quot;row&quot;&gt;
-                &lt;div class=&quot;col-12&quot;&gt;
-                    &lt;div id='calendar'&gt;&lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/main&gt;
-
-        &lt;footer class=&quot;footer&quot;&gt;
-            &lt;div class=&quot;container&quot;&gt;
-                &lt;span class=&quot;text-muted&quot;&gt;Soliant Consulting&lt;/span&gt;
-            &lt;/div&gt;
-        &lt;/footer&gt;
-
-        &lt;script&gt;
-            $('#calendar').fullCalendar(Carafe.getData());
-        &lt;/script&gt;
     &lt;/body&gt;
 &lt;/html&gt;
 </pre></div></div></div>        </main>

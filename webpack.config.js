@@ -45,7 +45,7 @@ module.exports = (env, options) => {
     ];
 
     if (options.mode === 'production') {
-        outputPath = path.resolve(__dirname, './carafe-package/');
+        outputPath = path.resolve(__dirname, './docs/carafe-packages-build/');
         plugins.push(
             new OptimizeCssAssetsPlugin({
                 assetNameRegExp: /\.css$/g,
