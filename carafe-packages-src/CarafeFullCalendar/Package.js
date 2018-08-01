@@ -2,13 +2,13 @@
 
 import 'jquery';
 import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'datatables.net';
-import 'datatables.net-dt/css/jquery.dataTables.css';
-import '../../es6/css/CarafeHomePage.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import './../../node_modules/fullcalendar/dist/fullcalendar.css';
+import fullcalendar from 'fullcalendar';
 import CarafeData from './ExampleData.json';
 import Carafe from '../../es6/lib/Carafe';
 
 const instance = new Carafe();
 instance.setData(CarafeData);
 module.exports = instance;
+window.fullcalendar = fullcalendar;
