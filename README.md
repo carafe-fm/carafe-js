@@ -6,31 +6,26 @@ See https://soliantconsulting.github.io/carafe/
 
 ## Quickstart
 
-- Copy Carafe infrastructure into your solution
-  - Two tables
-  - One custom function
-  - One folder of scripts
-- Run Carafe Initialize script
-- Create a Web Viewer
-- Paste the following expression into your Web Viewer
-  - `TEH CODEZ`
-- Define a JSON data source that matches one of the provided example formats
+- Open the companion FileMaker file in FileMaker 16+
+- Follow the Install Instructions on the Welcome screen
 
-Ta-dah!
 ## Basic Implementer Documentation
 
-- Explanation of carafeData var
+- Explanation of Carafe `getData` function
+- Define a JSON data source that matches one of the provided example formats
 - Working with JSFiddle
 - Creating your own sample data in JSFiddle
-  - e.g.: `carafeData = [["Garrett Winters", "Accountant", "Tokyo", "8422", "2011/07/25", "$170,750"],];`
+  - e.g.: `Carafe.setData([["Garrett Winters", "Accountant", "Tokyo", "8422", "2011/07/25", "$170,750"],]);`
 - Implementing custom HTML
-- Implementing JavaScript adjustments
-- Implementing CSS adjustments
+- Implementing custom JavaScript
+- Implementing custom CSS
 
 ## Advanced Implementer Documentation
 
-- Advanced use of carafeData var
-- FM WebViewer Bridge
+- Working with the Carafe debug console
+- Advanced use of Carafe `getData` and `setData` functions
+- Using Carafe to check if the runtime context `isFileMakerWebViewer`
+- Working with Carafe and FM WebViewer Bridge
 
 
 ## Package Development
