@@ -34,16 +34,9 @@ export default class Carafe {
         return this._fmBridge;
     }
 
-    callFMScript(fileName, scriptName, data, callback) {
-        this._fmBridge.callFMScript(fileName, scriptName, data, callback);
-    }
-
     enableConsole(pageWrapperSelector, navBar) {
         jQuery(document).ready(function () {
-            new InlineConsole({
-                pageWrapperSelector: pageWrapperSelector,
-                navBar: navBar,
-            });
+            new InlineConsole();
         });
     }
 }

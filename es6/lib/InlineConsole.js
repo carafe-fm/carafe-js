@@ -22,9 +22,7 @@ export default class InlineConsole {
     }
 
     addSidebarAndToggleHtmlToPage() {
-        this.pageWrapper = undefined !== this.defaults.pageWrapperSelector ?
-            jQuery(this.defaults.pageWrapperSelector) :
-            this.pageWrapper = jQuery('body:first');
+        this.pageWrapper = jQuery('body:first');
 
         jQuery(this.defaults.sidebar).prepend(
             '<div id="' + this.defaults.sideBarId + '" class="sidenav">\n' +
@@ -35,8 +33,8 @@ export default class InlineConsole {
         this.sideBar = jQuery('#' + this.defaults.sideBarId);
 
         jQuery(this.pageWrapper).prepend(
-            '<div class="icon-bar float-right">\n' +
-            '    <a class="toggleTerminal" href="#">FMJC=>&nbsp;</a>\n' +
+            '<div class="icon-bar float-right consoleLink">\n' +
+            '    <a class="toggleTerminal" href="#">console=>&nbsp;</a>\n' +
             '</div>\n'
         );
 
@@ -83,7 +81,7 @@ export default class InlineConsole {
                     this.echo('');
                 }
             }, {
-                greetings: 'FileMaker Javascript Console - 2018\nSoliant Consulting\n\n',
+                greetings: 'FileMaker Javascript Console\nSoliant Consulting - 2018\n\n',
                 outputLimit: -1
             });
         });

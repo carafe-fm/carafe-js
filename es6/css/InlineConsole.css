@@ -1,8 +1,14 @@
+.consoleLink{
+    position:absolute;
+    right:10px;
+    z-index: 9999999;
+}
+
 .sidenav {
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 999999;
     top: 0;
     right: 0;
     background: lightgrey;
