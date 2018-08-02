@@ -3,6 +3,7 @@ if (php_sapi_name() == "cli") {
     // In cli-mode
     ob_start();
 }
+
 ?><!doctype html>
 
 <html lang="en">
@@ -30,6 +31,8 @@ if (php_sapi_name() == "cli") {
             <?php
             $json = json_decode(file_get_contents("./../docs/carafe.json"), true);
             foreach ($json['packages'] as $packageName) {
+                $version = isset($sha) ? $sha : $json['version'];
+
                 echo '<div class="row row-striped">';
                 echo '<div class="col-3">';
                 echo '<span><h4>' . $packageName . '</h4></span>';
@@ -40,18 +43,17 @@ if (php_sapi_name() == "cli") {
                 echo '<div class="col-7">';
                 echo ' <a href="#" data-playground="jsfiddle" data-playground-from-group="' . $packageName . '" ' .
                     'data-playground-resources="' .
-                    'https://cdn.rawgit.com/soliantconsulting/carafe/' . $json['version'] . '/carafe-package/' . $packageName . '/' . $packageName . '.bundle.js,' .
-                    'https://cdn.rawgit.com/soliantconsulting/carafe/' . $json['version'] . '/carafe-package/' . $packageName . '/' . $packageName . '.css">Edit in JS Fiddle</a>';
+                    'https://cdn.rawgit.com/soliantconsulting/carafe/' . $version . '/docs/carafe-packages-build/' . $packageName . '/' . $packageName . '.bundle.js,' .
+                    'https://cdn.rawgit.com/soliantconsulting/carafe/' . $version . '/docs/carafe-packages-build/' . $packageName . '/' . $packageName . '.css">Edit in JS Fiddle</a>';
 
                 echo "<div style='display:none;'>";
 
                 echo "<pre data-playground-type='html' data-playground-group='" . $packageName . "'>";
                 echo htmlentities(file_get_contents('./carafe-packages-build/' . $packageName . '/Template.html')) . "\n";
+                echo '</pre>';
+                echo "<pre data-playground-type='javascript' data-playground-group='" . $packageName . "'>";
                 echo htmlentities(
-                    "<script>" .
-                    "var data = " . file_get_contents('./carafe-packages-build/' . $packageName . '/ExampleData.json') . ';' .
-                    "Carafe.setData(data);" .
-                    '</script>'
+                    "Carafe.setData(".file_get_contents('./carafe-packages-build/' . $packageName . '/ExampleData.json') . ");\n"
                 );
                 echo '</pre>';
 

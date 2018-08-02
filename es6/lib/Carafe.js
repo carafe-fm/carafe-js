@@ -36,10 +36,7 @@ export default class Carafe {
 
     enableConsole(pageWrapperSelector, navBar) {
         jQuery(document).ready(function () {
-            new InlineConsole({
-                pageWrapperSelector: pageWrapperSelector,
-                navBar: navBar,
-            });
+            new InlineConsole();
         });
     }
 }
