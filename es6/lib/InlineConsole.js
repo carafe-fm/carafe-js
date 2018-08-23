@@ -39,30 +39,35 @@ export default class InlineConsole {
         );
 
         jQuery('a.toggleTerminal').on('click', (e) => {
-            let mainWidth = parseInt(this.pageWrapper.css('width'));
-            let navBar = jQuery(this.defaults.navBar);
-            let animationOptions = {
-                duration: 200,
-                queue: false
-            };
-
-            if (parseInt(this.sideBar.css('width'))) {
-                this.pageWrapper.animate({"margin-right": (0) + "px"}, animationOptions);
-                this.sideBar.animate({width: "0px"}, animationOptions);
-            } else {
-                this.pageWrapper.animate({"margin-right": (this.defaults.width) + "px"}, animationOptions);
-                this.sideBar.animate({width: this.defaults.width + "px"}, animationOptions);
-            }
-
-            if (navBar) {
-                let navWidth = parseInt(navBar.css('width'));
-                if (parseInt(this.sideBar.css('width'))) {
-                    navBar.animate({width: (navWidth + this.defaults.width) + "px"}, animationOptions);
-                } else {
-                    navBar.animate({width: (navWidth - this.defaults.width) + "px"}, animationOptions);
-                }
-            }
+            this.openSideBar();
         });
+    }
+
+    openSideBar() {
+        console.debug('openSideBar');
+        let mainWidth = parseInt(this.pageWrapper.css('width'));
+        let navBar = jQuery(this.defaults.navBar);
+        let animationOptions = {
+            duration: 200,
+            queue: false
+        };
+
+        if (parseInt(this.sideBar.css('width'))) {
+            this.pageWrapper.animate({"margin-right": (0) + "px"}, animationOptions);
+            this.sideBar.animate({width: "0px"}, animationOptions);
+        } else {
+            this.pageWrapper.animate({"margin-right": (this.defaults.width) + "px"}, animationOptions);
+            this.sideBar.animate({width: this.defaults.width + "px"}, animationOptions);
+        }
+
+        if (navBar) {
+            let navWidth = parseInt(navBar.css('width'));
+            if (parseInt(this.sideBar.css('width'))) {
+                navBar.animate({width: (navWidth + this.defaults.width) + "px"}, animationOptions);
+            } else {
+                navBar.animate({width: (navWidth - this.defaults.width) + "px"}, animationOptions);
+            }
+        }
     }
 
     initInlineTerminal() {
