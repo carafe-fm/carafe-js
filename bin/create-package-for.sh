@@ -52,6 +52,29 @@ END_TEXT
 fi
 
 #
+# create the app package.json file
+#
+if [[ -d "${carafe_packages}" && ! -L "${carafe_packages}" && ! -f "{$package_path}/package.json" ]] ; then
+    echo "Creating $package_path/package.json"
+    cat > "$package_path/package.json" << END_TEXT
+{
+  "name": "${recipe_name}",
+  "version": "0.0.1",
+  "description": "Soliant Carafe module",
+  "contributors": [
+    {
+      "name": "",
+      "email": ""
+    }
+  ],
+  "dependencies": {
+  }
+}
+
+END_TEXT
+fi
+
+#
 # create the Template.html file
 #
 if [[ -d "${carafe_packages}" && ! -L "${carafe_packages}" && ! -f "{$package_path}/Template.html" ]] ; then
@@ -72,7 +95,7 @@ if [[ -d "${carafe_packages}" && ! -L "${carafe_packages}" && ! -f "{$package_pa
             <div class="row">
                 <div class="col-12">
                     <div class="text-center">
-                        <h2>New Package</h2>
+                        <h2>${recipe_name} Package</h2>
                     </div>
                 </div>
             </div>

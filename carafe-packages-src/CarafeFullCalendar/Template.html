@@ -44,7 +44,9 @@
         </footer>
 
         <script>
-            $('#calendar').fullCalendar(Carafe.getData());
+            Carafe.ready(function(carafeData) {
+                $('#calendar').fullCalendar(carafeData);
+            });
         </script>
     </body>
 </html>

@@ -1,0 +1,43 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- carafeZoneStart -->
+        <script src="./CarafeGoogleMaps.bundle.js"></script>
+        <!-- carafeZoneEnd  -->
+    </head>
+    <body>
+        <div id="map_canvas"></div>
+    </body>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map_canvas {
+            height: 100%;
+        }
+    </style>
+    <script>
+        var mapData = null;
+
+        // google maps requires a callback to initialize the map
+        // not called until after the call to google returns
+        function initialize() {
+            console.log('Google Maps API version 21: ' + google.maps.version);
+            window.carafeGoogleMaps.initialize("map_canvas", mapData);
+        }
+
+        Carafe.ready(function(carafeData) {
+            mapData = carafeData;
+            // load the google maps api - passing in your google api key
+            let script = document.createElement("script");
+            script.setAttribute("src", "https://maps.googleapis.com/maps/api/js?key=" + carafeData.googleApiKey + "&callback=initialize");
+            document.getElementsByTagName("head")[0].appendChild(script);
+        });
+
+    </script>
+</html>

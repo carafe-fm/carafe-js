@@ -1,7 +1,7 @@
 "use strict";
 
 import * as fmBridge from 'fm-webviewer-bridge'
-import InlineConsole from './InlineConsole';
+import 'headjs/dist/1.0.0/head.load';
 
 export default class Carafe {
     constructor() {
@@ -34,9 +34,43 @@ export default class Carafe {
         return this._fmBridge;
     }
 
-    enableConsole(pageWrapperSelector, navBar) {
-        jQuery(document).ready(function () {
-            new InlineConsole();
+    getJSON(url, callback) {
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.responseType = 'json';
+
+        xhr.onload = function () {
+            let status = xhr.status;
+
+            if (status === 200) {
+                callback(xhr.response);
+            } else {
+                // todo: deal with error
+                //alert(status);
+            }
+        };
+
+        xhr.send();
+    };
+
+    css(resource) {
+        return head.load(resource);
+    };
+
+    js(resource) {
+        return head.js(resource);
+    };
+
+    ready(callback) {
+        head.ready(() => {
+            if (!this.isFileMakerWebViewer()) {
+                this.getJSON('./ExampleData.json', (data) => {
+                    this.setData(data);
+                    callback(this.getData());
+                });
+            } else {
+                callback(this.getData());
+            }
         });
     }
 }
