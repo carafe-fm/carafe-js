@@ -1,4 +1,8 @@
 {
+    "carafe" : {
+        "css" : ["https://cdn.datatables.net/v/bs4-4.1.1/jq-3.3.1/jszip-2.5.0/dt-1.10.18/b-1.5.2/b-colvis-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/fh-3.1.4/r-2.2.2/rg-1.0.3/sl-1.2.6/datatables.min.css"],
+        "js" : ["https://cdn.datatables.net/v/bs4-4.1.1/jq-3.3.1/jszip-2.5.0/dt-1.10.18/b-1.5.2/b-colvis-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/fh-3.1.4/r-2.2.2/rg-1.0.3/sl-1.2.6/datatables.min.js"]
+    },
     "firstTable" : [
         ["Tiger Nixon's Mom", "System Architect", "Edinburgh", "5421", "2011/04/25", "$320,800"],
         ["Garrett Winters", "Accountant", "Tokyo", "8422", "2011/07/25", "$170,750"],

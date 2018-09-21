@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- carafeZoneStart -->
+        <script src="./Carafe.bundle.js"></script>
+        <!-- carafeZoneEnd  -->
+    </head>
+    <body>
+        <main role="main" class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Carafe</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <pre id='dataDump'></pre>
+                </div>
+            </div>
+        </main>
+    </body>
+    <script>
+        Carafe.ready(function (carafeData) {
+            document.getElementById('dataDump').innerHTML = JSON.stringify(carafeData);
+        });
+    </script>
+</html>

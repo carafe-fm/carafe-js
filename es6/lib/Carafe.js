@@ -61,15 +61,31 @@ export default class Carafe {
         return head.js(resource);
     };
 
+    callCallback(callback) {
+        let data = this.getData();
+
+        if (undefined !== data.carafe && undefined !== data.carafe.css) {
+            this.css(data.carafe.css)
+        }
+
+        if (undefined !== data.carafe && undefined !== data.carafe.js) {
+            this.js(data.carafe.js)
+        }
+
+        head.ready(() => {
+            callback(data);
+        });
+    };
+
     ready(callback) {
         head.ready(() => {
             if (!this.isFileMakerWebViewer()) {
                 this.getJSON('./ExampleData.json', (data) => {
                     this.setData(data);
-                    callback(this.getData());
+                    this.callCallback(callback);
                 });
             } else {
-                callback(this.getData());
+                this.callCallback(callback);
             }
         });
     }
