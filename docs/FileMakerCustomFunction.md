@@ -4,25 +4,26 @@
 ```
 /**
  * @SIGNATURE:
- * _carafeTemplateMerge ( packageName; jsonData ; implementationSemanticVersion )
+ * _carafeTemplateMerge ( implementationName; jsonData ; implementationSemanticVersion )
  *
  * @PARAMETERS:
- * packageName - Required. Must be a valid Carafe package name.
+ * implementationName - Required. Must be a valid Carafe implementation name.
  * jsonData - Required. Must be valid JSON. The JSON passed in here will be available to JavaScript from `Carafe.getData()`.
- * implementationSemanticVersion - Optional. May be an empty string or a valid semantic version. Leaving it empty will return the default implementation from the newest package version available in the local environment.
+ * implementationSemanticVersion - Optional. May be an empty string or a valid semantic version. Leaving it empty will return the package from the newest implementation version available in the local environment.
  *
  * @HISTORY:
  * Created: 2018-Aug-01 by Jeremiah Small
  * Modified: 2018-Aug-28 by Jeremiah Small
+ * Modified: 2018-Sep-11 by Jeremiah Small
  *
  * @PURPOSE:
- * This function merges together a Carafe package, JSON data, and an optional custom implementation.
+ * This function merges together a Carafe package and JSON data in a specific implementation.
  *
  * @RESULT:
  * A successful result will be a valid HTML document with all the dependencies and data included in it.
  *
  * @ERRORS:
- * This function returns an error message as an HTML document if the requested implementationSemanticVersion does not exist.
+ * This function returns an error message as an HTML document if the requested implementationName and implementationSemanticVersion do not exist.
  *
  * @NOTES:
  * The Carafe project is on GitHub: https://github.com/soliantconsulting/carafe
@@ -32,14 +33,20 @@
 Let ( [
   // Lookup specified or latest ImplementationUniqueVersion if one exists
   ImplementationUniqueVersion = If ( IsEmpty ( implementationSemanticVersion ) ;
-    ExecuteSQL("SELECT ImplementationUniqueVersion FROM CarafeImplementation CI WHERE CI.CarafePackageName = ?
+    ExecuteSQL("SELECT ImplementationUniqueVersion FROM CarafeImplementation CI WHERE CI.ImplementationName = ?
       ORDER BY CI.ImplementationSemanticVersionMajor DESC, CI.ImplementationSemanticVersionMinor DESC, CI.ImplementationSemanticVersionPatch DESC
-        FETCH FIRST 1 ROW ONLY"; ""; ""; packageName);
-    ExecuteSQL("SELECT ImplementationUniqueVersion FROM CarafeImplementation CI WHERE CI.CarafePackageName = ? AND CI.ImplementationSemanticVersion = ?";
-        ""; ""; packageName ; implementationSemanticVersion)
+        FETCH FIRST 1 ROW ONLY"; ""; ""; implementationName);
+    ExecuteSQL("SELECT ImplementationUniqueVersion FROM CarafeImplementation CI WHERE CI.ImplementationName = ? AND CI.ImplementationSemanticVersion = ?";
+        ""; ""; implementationName ; implementationSemanticVersion)
   );
 
-  implementationExists = Not IsEmpty ( ImplementationUniqueVersion );
+  implementationExists = not IsEmpty ( ImplementationUniqueVersion );
+
+  // Lookup packageName with the ImplementationUniqueVersion
+  packageName = If ( implementationExists;
+    ExecuteSQL("SELECT CarafePackageName FROM CarafeImplementation CI WHERE CI.ImplementationUniqueVersion = ?"; ""; ""; ImplementationUniqueVersion);
+    "" // Implementation missing
+  );
 
   // Lookup packageTag with the ImplementationUniqueVersion
   packageTag = If ( implementationExists;
@@ -62,7 +69,7 @@ Let ( [
 
   htmlTemplateImplementation = If ( implementationExists;
     ExecuteSQL("SELECT ImplementationHtml FROM CarafeImplementation CI WHERE CI.ImplementationUniqueVersion = ?"; ""; ""; ImplementationUniqueVersion);
-    "<!doctype html><html><body>" & packageName & " Implementation Semantic Version " & implementationSemanticVersion & " is missing</body></html>" // Implementation missing
+    "<!doctype html><html><body>Implementation Name <i>" & implementationName & "</i> Implementation Semantic Version <i>" & implementationSemanticVersion & "</i> is missing</body></html>" // Implementation missing
   );
 
   // Define the text boundaries
