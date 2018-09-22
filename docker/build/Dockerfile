@@ -1,8 +1,4 @@
-FROM node:8.1
-
-RUN rm /usr/local/bin/yarn && rm /usr/local/bin/yarnpkg
-RUN rm -rf /opt/yarn
-RUN npm install -g yarn
+FROM node:8.12
 
 COPY entrypoint.sh /usr/bin/entrypoint.sh
 

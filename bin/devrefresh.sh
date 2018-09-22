@@ -2,11 +2,11 @@
 
 if [ "$1" = "--hard" ]; then
     docker pull php:7.2-apache
-    docker pull node:8.1
+    docker pull node:8.12
 fi
 
 docker-compose build
-docker-compose run --rm build yarn install
+docker-compose run --rm build npm install
 docker-compose run --rm build webpack --mode development
 docker-compose up -d
 docker-compose exec web composer install

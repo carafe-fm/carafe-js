@@ -79,7 +79,7 @@ It is our strongly held belief that using developer-friendly, well documented pr
 docker-compose run --rm build
 ```
 
-This tells docker-compose to run the container we've named 'build' and immediately remove the container after run. We just want it to execute something immediate, so we don't want it to stick around. Anything you write after 'build', will be executed in the container's context before it exits. Any results returned in the container are returned to you. This means that you do not have to worry about numerous environment dependencies, such as node, npm, yarn, webpack, etc.
+This tells docker-compose to run the container we've named 'build' and immediately remove the container after run. We just want it to execute something immediate, so we don't want it to stick around. Anything you write after 'build', will be executed in the container's context before it exits. Any results returned in the container are returned to you. This means that you do not have to worry about numerous environment dependencies, such as node, npm, webpack, etc.
 
 Setting up and managing a build pipeline used to be a brittle and frustrating process, creating an initial steep ramp for working with build automation. With a pre-configured build container, the process is simple. You can do anything you'd normally do with webpack, but without having to setup and maintain any of the lower level dependencies in your environment. For example, this is a webpack command:
 
