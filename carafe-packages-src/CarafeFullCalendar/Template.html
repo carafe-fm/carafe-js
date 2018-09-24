@@ -3,8 +3,7 @@
     <head>
         <meta charset="utf-8">
         <!-- carafeZoneStart -->
-        <link rel="stylesheet" type="text/css" href="./CarafeFullCalendar.css">
-        <script src="./CarafeFullCalendar.bundle.js"></script>
+        <script src="../Carafe/Carafe.bundle.js"></script>
         <!-- carafeZoneEnd  -->
     </head>
     <body>
@@ -44,7 +43,9 @@
         </footer>
 
         <script>
-            $('#calendar').fullCalendar(Carafe.getData());
+            Carafe.ready(function(carafeData) {
+                $('#calendar').fullCalendar(carafeData);
+            });
         </script>
     </body>
 </html>

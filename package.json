@@ -15,6 +15,7 @@
     }
   ],
   "dependencies": {
+    "@google/markerclusterer": "^1.0.3",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-runtime": "^6.23.0",
@@ -30,15 +31,14 @@
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.11",
-    "d3": "^5.5.0",
-    "datatables.net": "^1.10.16",
-    "datatables.net-dt": "^1.10.16",
     "expose-loader": "^0.7.5",
     "file-loader": "^1.1.11",
+    "file-system": "^2.2.2",
     "fm-webviewer-bridge": "geistinteractive/fm-webviewer-bridge",
     "font-awesome": "^4.7.0",
     "fullcalendar": "^3.9.0",
     "glob": "^7.1.2",
+    "headjs": "headjs/headjs",
     "html-loader": "^0.5.5",
     "html5sortable": "lukasoppermann/html5sortable",
     "ignore-loader": "^0.1.2",
@@ -59,12 +59,18 @@
     "optimize-css-assets-webpack-plugin": "NMFR/optimize-css-assets-webpack-plugin",
     "popper.js": "^1.14.3",
     "precss": "^3.1.2",
+    "resolve-url-loader": "^2.3.0",
     "sass-loader": "^7.0.1",
     "style-loader": "^0.20.3",
+    "systemjs": "github:systemjs/systemjs",
+    "tinymce": "^4.8.2",
     "transfer-webpack-plugin": "^0.1.4",
     "uglifyjs-webpack-plugin": "1.2.4",
     "url-loader": "^1.0.1",
     "webpack": "^4.8.3",
     "webpack-cli": "^2.0.14"
-  }
+  },
+  "main": "index.js",
+  "repository": "ssh://git@versions.soliantconsulting.com:7999/soliant/carafe.git",
+  "author": "Jesse LaVere <jlavere@soliantconsulting.com>"
 }

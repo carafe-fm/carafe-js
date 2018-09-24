@@ -1,0 +1,66 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- carafeZoneStart -->
+        <script src="../Carafe/Carafe.bundle.js"></script>
+        <!-- carafeZoneEnd  -->
+    </head>
+    <body>
+        <div id="map_canvas"></div>
+    </body>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map_canvas {
+            height: 100%;
+        }
+    </style>
+    <script>
+        var mapData = null;
+
+        // google maps requires a callback to initialize the map
+        // not called until after the call to google returaccount/refresh-sessionns
+        function initialize() {
+            var data = mapData;
+            var markers = [];
+            var map = new google.maps.Map(document.getElementById('map_canvas'), data);
+            var markerBounds = new google.maps.LatLngBounds();
+
+            if (data.markers.length) {
+                for (let i = 0; i < data.markers.length; i++) {
+                    let markerConfig = data.markers[i];
+                    let marker = new google.maps.Marker(markerConfig);
+                    marker.setMap(map);
+                    markerBounds.extend(markerConfig.position);
+                    markers.push(marker);
+                }
+
+                map.setCenter(markerBounds.getCenter());
+                map.fitBounds(markerBounds);
+
+                new MarkerClusterer(
+                    map,
+                    markers,
+                    {
+                        imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
+                    }
+                );
+            }
+        }
+
+        Carafe.ready(function (carafeData) {
+            mapData = carafeData;
+
+            // load the google maps api - passing in your google api key
+            let script = document.createElement("script");
+            script.setAttribute("src", "https://maps.googleapis.com/maps/api/js?key=" + carafeData.googleApiKey + "&callback=initialize");
+            document.getElementsByTagName("head")[0].appendChild(script);
+        });
+    </script>
+</html>
