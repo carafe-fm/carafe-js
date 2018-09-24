@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- carafeZoneStart -->
+        <script src="../Carafe/Carafe.bundle.js"></script>
+        <!-- carafeZoneEnd  -->
+    </head>
+    <body>
+        <header>
+            <!-- Fixed navbar -->
+            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <a class="navbar-brand" href="/">Carafe</a>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Carafe FullCalendar.io Example</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <main role="main" class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-center">
+                        <h1>Carafe FullCalendar.io Example</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div id='calendar'></div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <span class="text-muted">Soliant Consulting</span>
+            </div>
+        </footer>
+
+        <script>
+            Carafe.ready(function(carafeData) {
+                $('#calendar').fullCalendar(carafeData);
+            });
+        </script>
+    </body>
+</html>

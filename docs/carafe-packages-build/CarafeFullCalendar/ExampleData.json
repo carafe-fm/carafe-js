@@ -1,0 +1,31 @@
+{
+  "carafe": {
+    "css": [
+      "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css",
+      "https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css"
+    ],
+    "js": [
+      "https://code.jquery.com/jquery-3.3.1.min.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js",
+      "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"
+    ]
+  },
+  "events": [
+    {
+      "title": "October First Yo!",
+      "start": "2018-10-01"
+    },
+    {
+      "title": "event2",
+      "start": "2018-08-05",
+      "end": "2018-08-07"
+    },
+    {
+      "title": "event3",
+      "start": "2018-08-09T12:30:00",
+      "allDay": false
+    }
+  ]
+}
