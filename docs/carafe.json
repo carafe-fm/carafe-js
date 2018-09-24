@@ -2,13 +2,12 @@
     "name": "Carafe Package Manifest",
     "version": "0.1.0",
     "packages": [
+        "Carafe",
         "CarafeD3",
         "CarafeDataTables",
-        "CarafeFontAwesome",
         "CarafeFullCalendar",
         "CarafeGoogleMaps",
-        "CarafeJustifiedGallery",
-        "CarafeShowcase"
+        "CarafeJustifiedGallery"
     ],
     "roadmap": [
         "CarafeSheetJS",

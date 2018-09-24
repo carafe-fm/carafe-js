@@ -15,6 +15,7 @@
     }
   ],
   "dependencies": {
+    "@google/markerclusterer": "^1.0.3",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-runtime": "^6.23.0",

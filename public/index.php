@@ -32,6 +32,22 @@ if (php_sapi_name() == "cli") {
             $json = json_decode(file_get_contents("./../docs/carafe.json"), true);
             foreach ($json['packages'] as $packageName) {
                 $version = isset($sha) ? $sha : $json['version'];
+                $htmlContents = file_get_contents('./carafe-packages-build/' . $packageName . '/Template.html');
+                $jsonContents = file_get_contents('./carafe-packages-build/' . $packageName . '/ExampleData.json');
+                $packageContents = file_get_contents('./carafe-packages-build/Carafe/Carafe.bundle.js');
+                $htmlContents = str_replace(
+                    '<script src="../Carafe/Carafe.bundle.js"></script>',
+                    '<script type="application/javascript">' .
+                    $packageContents . "\n" .
+                    "Carafe.setIsJsFiddle();\n" .
+                    '</script>',
+                    $htmlContents
+                );
+                $exampleDataJson = json_decode($jsonContents);
+                $resources = implode(',', array_merge(
+                    isset($exampleDataJson->carafe->css) ? $exampleDataJson->carafe->css : [],
+                    isset($exampleDataJson->carafe->js) ? $exampleDataJson->carafe->js : []
+                ));
 
                 echo '<div class="row row-striped">';
                 echo '<div class="col-3">';
@@ -41,22 +57,19 @@ if (php_sapi_name() == "cli") {
                 echo ' <a href="./carafe-packages-build/' . $packageName . '/Template.html' . '" target="_blank">View Example</a>';
                 echo "</div>";
                 echo '<div class="col-7">';
-                echo ' <a href="#" data-playground="jsfiddle" data-playground-from-group="' . $packageName . '" ' .
-                    'data-playground-resources="' .
-                    'https://cdn.rawgit.com/soliantconsulting/carafe/' . $version . '/docs/carafe-packages-build/' . $packageName . '/' . $packageName . '.bundle.js,' .
-                    'https://cdn.rawgit.com/soliantconsulting/carafe/' . $version . '/docs/carafe-packages-build/' . $packageName . '/' . $packageName . '.css">Edit in JS Fiddle</a>';
+                echo ' <a href="#" data-playground="jsfiddle" data-playground-wrap="b" data-playground-from-group="' . $packageName . '" ' .
+                    'data-playground-resources="' . $resources . '">Edit in JS Fiddle</a>';
 
                 echo "<div style='display:none;'>";
 
                 echo "<pre data-playground-type='html' data-playground-group='" . $packageName . "'>";
-                echo htmlentities(file_get_contents('./carafe-packages-build/' . $packageName . '/Template.html')) . "\n";
+                echo htmlentities($htmlContents) . "\n";
                 echo '</pre>';
                 echo "<pre data-playground-type='javascript' data-playground-group='" . $packageName . "'>";
                 echo htmlentities(
-                    "Carafe.setData(".file_get_contents('./carafe-packages-build/' . $packageName . '/ExampleData.json') . ");\n"
+                    "Carafe.setData(" . file_get_contents('./carafe-packages-build/' . $packageName . '/ExampleData.json') . ");\n"
                 );
                 echo '</pre>';
-
                 echo "</div>";
                 echo "</div>";
                 echo "</div>";

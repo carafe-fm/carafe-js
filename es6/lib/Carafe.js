@@ -9,8 +9,10 @@ export default class Carafe {
             Carafe.instance = this;
         }
 
+        this._data = {};
         this._fmBridge = fmBridge;
         this._isFileMakerWebViewer = false;
+        this._isJsFiddle = false;
         return Carafe.instance;
     }
 
@@ -20,6 +22,10 @@ export default class Carafe {
 
     setIsFileMakerWebViewer() {
         this._isFileMakerWebViewer = true;
+    }
+
+    setIsJsFiddle() {
+        this._isJsFiddle = true;
     }
 
     isFileMakerWebViewer() {
@@ -64,12 +70,14 @@ export default class Carafe {
     callCallback(callback) {
         let data = this.getData();
 
-        if (undefined !== data.carafe && undefined !== data.carafe.css) {
-            this.css(data.carafe.css)
-        }
+        if (!this._isJsFiddle) {
+            if (undefined !== data.carafe && undefined !== data.carafe.css) {
+                this.css(data.carafe.css)
+            }
 
-        if (undefined !== data.carafe && undefined !== data.carafe.js) {
-            this.js(data.carafe.js)
+            if (undefined !== data.carafe && undefined !== data.carafe.js) {
+                this.js(data.carafe.js)
+            }
         }
 
         head.ready(() => {
@@ -79,7 +87,7 @@ export default class Carafe {
 
     ready(callback) {
         head.ready(() => {
-            if (!this.isFileMakerWebViewer()) {
+            if (!this.isFileMakerWebViewer() && !this._isJsFiddle) {
                 this.getJSON('./ExampleData.json', (data) => {
                     this.setData(data);
                     this.callCallback(callback);

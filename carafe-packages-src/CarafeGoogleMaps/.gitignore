@@ -1,6 +1,0 @@
-vendor/
-node_modules/
-public/*
-!public/README.md
-!public/index.php
-*.log

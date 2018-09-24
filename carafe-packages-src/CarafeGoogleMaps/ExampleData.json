@@ -1,4 +1,8 @@
 {
+  "carafe": {
+    "css": [],
+    "js": ["https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer_compiled.js"]
+  },
   "googleApiKey" : "AIzaSyBaIJyt1jzvRhLdfQK6w1cFt8GqCx6SDZI",
   "mapConfig" :
   {

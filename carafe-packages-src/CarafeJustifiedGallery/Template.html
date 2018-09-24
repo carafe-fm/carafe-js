@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <!-- carafeZoneStart -->
-        <script src="./CarafeJustifiedGallery.bundle.js"></script>
+        <script src="../Carafe/Carafe.bundle.js"></script>
         <!-- carafeZoneEnd  -->
     </head>
     <body>
@@ -39,12 +39,6 @@
             if (title != null) img.title = title;
             return img;
         }
-
-        // jquery
-        Carafe.js('https://code.jquery.com/jquery-3.3.1.min.js');
-
-        Carafe.css('https://cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.7.0/css/justifiedGallery.min.css');
-        Carafe.js('https://cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.7.0/js/jquery.justifiedGallery.min.js');
 
         Carafe.ready(function (carafeData) {
             $(document).ready(function() {

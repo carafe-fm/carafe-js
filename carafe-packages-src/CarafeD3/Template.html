@@ -3,8 +3,7 @@
     <head>
         <meta charset="utf-8">
         <!-- carafeZoneStart -->
-        <link rel="stylesheet" type="text/css" href="./CarafeD3.css">
-        <script src="./CarafeD3.bundle.js"></script>
+        <script src="../Carafe/Carafe.bundle.js"></script>
         <!-- carafeZoneEnd  -->
         <style>
             .links line {
@@ -66,13 +65,6 @@
         </footer>
     </body>
     <script>
-        Carafe.js('https://code.jquery.com/jquery-3.3.1.min.js');
-        Carafe.js('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js');
-        Carafe.js('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js');
-        Carafe.js('https://d3js.org/d3.v5.js');
-
-        Carafe.css('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
-
         Carafe.ready(function (carafeData) {
             jQuery('.json').html(JSON.stringify(carafeData, undefined, 2));
 
