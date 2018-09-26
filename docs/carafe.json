@@ -1,17 +1,7 @@
 {
     "name": "Carafe Package Manifest",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "packages": [
-        "Carafe",
-        "CarafeD3",
-        "CarafeDataTables",
-        "CarafeFullCalendar",
-        "CarafeGoogleMaps",
-        "CarafeJustifiedGallery"
-    ],
-    "roadmap": [
-        "CarafeSheetJS",
-        "CarafeTbdImageCreationAndSaving",
-        "CarafeEmbeddedImageExample"
+        "Carafe"
     ]
 }
