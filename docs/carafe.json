@@ -3,5 +3,17 @@
     "version": "0.1.1",
     "packages": [
         "Carafe"
-    ]
+    ],
+    "implementations": {
+        "Carafe": [
+            "C3",
+            "D3",
+            "DataTables",
+            "FullCalendar",
+            "GoogleMaps",
+            "JustifiedGallery",
+            "Leaflet",
+            "TinyMCE"
+        ]
+    }
 }
