@@ -1,0 +1,12 @@
+body {
+  padding-top: 2rem;
+}
+
+nav {
+  border-bottom: 3px solid #DFB826;
+}
+
+#logo img {
+  height: 48px;
+  width: 130px;
+}
