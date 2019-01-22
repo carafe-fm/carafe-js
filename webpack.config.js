@@ -1,19 +1,15 @@
 // helpers
 const glob = require('glob');
 const path = require('path');
-const webpack = require('webpack');
 
 // plugins
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 // build a dynamic object listing the packages to be processed
-let packagesToBuild = {
-    'CarafeHomePage': 'app/CarafeHomePage.js',
-};
+let packagesToBuild = {};
 
 // folders inside carafe-packages-src with a Package.js file will be added to the object listing
 glob.sync(path.join(__dirname, 'carafe-packages-src/**/Package.js')).forEach((filePath) => {
@@ -26,7 +22,7 @@ module.exports = (env, options) => {
     let plugins = [
         new MiniCssExtractPlugin({
             filename: '[name]/[name].css',
-            chunkFilename: '[id].css'
+            chunkFilename: '[name].css'
         }),
         new CopyWebpackPlugin([{
             context: './carafe-packages-src/',
@@ -91,8 +87,12 @@ module.exports = (env, options) => {
                     test: /\.(scss|css)$/,
                     use: [
                         MiniCssExtractPlugin.loader,
-                        'css-loader',
-                        'sass-loader'
+                        {
+                            loader: "css-loader" // translates CSS into CommonJS
+                        },
+                        {
+                            loader: "sass-loader" // compiles Sass to CSS
+                        }
                     ]
                 },
                 // process png, jpg, gif, svg imports
@@ -107,14 +107,6 @@ module.exports = (env, options) => {
                 {
                     test: /\.html$/,
                     loader: ['html-loader']
-                },
-                // expose jquery to the window object
-                {
-                    test: require.resolve('jquery'),
-                    use: [
-                        {loader: 'expose-loader', options: 'jQuery'},
-                        {loader: 'expose-loader', options: '$'}
-                    ]
                 },
             ]
         }

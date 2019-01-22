@@ -10,3 +10,6 @@
 Default username: admin
 Default password: admin
 ```
+
+docker-compose run --rm build webpack --mode development --watch
+docker-compose run --rm build webpack --mode development --config webpack.tooling.config.js --watch
