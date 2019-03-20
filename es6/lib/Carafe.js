@@ -5,15 +5,11 @@ import 'headjs/dist/1.0.0/head.load';
 
 export default class Carafe {
     constructor() {
-        if (!Carafe.instance) {
-            Carafe.instance = this;
-        }
-
         this._data = {};
         this._fmBridge = fmBridge;
         this._isFileMakerWebViewer = false;
         this._isJsFiddle = false;
-        return Carafe.instance;
+        return this;
     }
 
     setData(data) {
@@ -50,9 +46,6 @@ export default class Carafe {
 
             if (status === 200) {
                 callback(xhr.response);
-            } else {
-                // todo: deal with error
-                //alert(status);
             }
         };
 
@@ -71,12 +64,22 @@ export default class Carafe {
         let data = this.getData();
 
         if (!this._isJsFiddle) {
-            if (undefined !== data.carafe && undefined !== data.carafe.css) {
-                this.css(data.carafe.css)
-            }
+            if (undefined !== data.carafe) {
+                if (undefined !== data.carafe.css) {
+                    this.css(data.carafe.css)
+                }
 
-            if (undefined !== data.carafe && undefined !== data.carafe.js) {
-                this.js(data.carafe.js)
+                if (undefined !== data.carafe.js) {
+                    this.js(data.carafe.js)
+                }
+
+                if (undefined !== data.carafe.cdns && undefined !== data.carafe.cdns.css) {
+                    this.css(data.carafe.cdns.css)
+                }
+
+                if (undefined !== data.carafe.cdns && undefined !== data.carafe.cdns.js) {
+                    this.js(data.carafe.cdns.js)
+                }
             }
         }
 
