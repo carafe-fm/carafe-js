@@ -10,11 +10,11 @@ export default class Carafe {
      * @returns {Carafe}
      */
     constructor() {
-        this._version = '0.6.0';
+        this._version = '0.7.1';
         this._jsonData = {};
         this._metaData = {};
         this._fmBridge = fmBridge;
-        this._isFileMakerWebViewer = false;
+        this._useStandardDataLoading = true;
 
         return this;
     }
@@ -37,15 +37,19 @@ export default class Carafe {
      * Tell carafe that the implementation will be run in a webviewer.
      * This is used to stop the loading of local resources used for dev/CodeSandbox.
      */
-    setIsFileMakerWebViewer() {
-        this._isFileMakerWebViewer = true;
+    setIsStandardDataLoading() {
+        this._useStandardDataLoading = true;
+    }
+
+    setLocalResourceDataLoading() {
+        this._useStandardDataLoading = false;
     }
 
     /**
      * @returns {boolean}
      */
-    isFileMakerWebViewer() {
-        return this._isFileMakerWebViewer;
+    isStandardDataLoading() {
+        return this._useStandardDataLoading;
     }
 
     /**
@@ -70,16 +74,15 @@ export default class Carafe {
     }
 
     /**
-     * Fetch sparse bundle resources if not in FileMaker.
+     * Fetch local file resources if configured.
      * Load CDN resources.
-     * Setup update bundle callback functions when not in FileMaker
      * Call the user callback.
      * @param callback
      */
     ready(callback) {
         new Promise((resolve, reject) => {
             // fetch example json if needed
-            resolve(this.isFileMakerWebViewer() ? undefined : this.fetchLocalFileResources());
+            resolve(this.isStandardDataLoading() ? undefined : this.fetchLocalFileResources());
         }).then(() => {
             // load CDN resources
             return this.loadResources();
@@ -88,7 +91,7 @@ export default class Carafe {
                 callback(this.getData());
             });
         }).catch(function () {
-            console.debug('error fetching metaData from implementationData');
+            console.debug('error fetching metaData from configData');
         });
     }
 
@@ -114,20 +117,21 @@ export default class Carafe {
      * @returns {Promise<[any]>}
      */
     fetchLocalFileResources() {
-        const exampleJsonRequest = this.getJsonFromUrl('./exampleJsonData.json')
+        const dataRequest = this.getJsonFromUrl('./data.json')
             .then((response) => {
                 this.setData(response);
             });
 
-        const metaDataRequest = this.getJsonFromUrl('./implementationData.json')
-            .then((implementationData) => {
-                // @todo trap for errors?
-                this.setMetaData(implementationData.metaData);
+        const configRequest = this.getJsonFromUrl('./config.json')
+            .then((response) => {
+                if (undefined !== response.metaData) {
+                    this.setMetaData(response.metaData);
+                }
             });
 
-        return Promise.all([exampleJsonRequest, metaDataRequest])
+        return Promise.all([dataRequest, configRequest])
             .catch(function () {
-                console.debug('error fetching metaData from implementationData');
+                console.debug('error fetching local file data.json or config.json');
             });
     }
 
