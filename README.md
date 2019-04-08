@@ -4,8 +4,8 @@ This JavaScript turbo-charges any Carafe Bundle project. It provides a Bundle de
 
 ## Installation
 
-To use Carafe.js in your Bundle, you can include it from a CDN, or you can include the [19kb of minified code](https://cdn.jsdelivr.net/gh/soliantconsulting/carafe@0.7.1/dist/Carafe.js) inside a `<script  type="application/javascript"></script>` tag.
+To use Carafe.js in your Bundle, you can include it from a CDN, or you can include the [19kb of minified code](https://cdn.jsdelivr.net/gh/soliantconsulting/carafe@0.7.3/dist/Carafe.js) inside a `<script  type="application/javascript"></script>` tag.
 
 ```html
-<script type="application/javascript" src="https://cdn.jsdelivr.net/gh/soliantconsulting/carafe@0.7.1/dist/Carafe.js"></script>
+<script type="application/javascript" src="https://cdn.jsdelivr.net/gh/soliantconsulting/carafe@0.7.3/dist/Carafe.js"></script>
 ```

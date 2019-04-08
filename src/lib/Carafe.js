@@ -10,7 +10,7 @@ export default class Carafe {
      * @returns {Carafe}
      */
     constructor() {
-        this._version = '0.7.1';
+        this._version = '0.7.3';
         this._jsonData = {};
         this._metaData = {
             "cdns": {
