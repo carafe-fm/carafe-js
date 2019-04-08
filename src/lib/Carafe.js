@@ -12,7 +12,12 @@ export default class Carafe {
     constructor() {
         this._version = '0.7.1';
         this._jsonData = {};
-        this._metaData = {};
+        this._metaData = {
+            "cdns": {
+                "css": [],
+                "js": []
+            }
+        };
         this._fmBridge = fmBridge;
         this._useStandardDataLoading = true;
 
@@ -31,6 +36,20 @@ export default class Carafe {
      */
     setMetaData(data) {
         this._metaData = data;
+    }
+
+    /**
+     * @param array
+     */
+    setCssCdnArray(array) {
+        this._metaData.cdns.css = array;
+    }
+
+    /**
+     * @param array
+     */
+    setJsCdnArray(array) {
+        this._metaData.cdns.js = array;
     }
 
     /**
