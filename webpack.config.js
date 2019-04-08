@@ -4,49 +4,46 @@ const path = require('path');
 
 // plugins
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const hotCoffee = `
+ Starting A Fresh Brew
+                 )
+                (
+    __========__ )
+ .-'------------ /
+( C|/\\/\\/\\/\\/\\/\\|
+ '-./\\/\\/\\/\\/\\/\\|
+   '____________'
+    '----------'
 
-// build a dynamic object listing the packages to be processed
-let packagesToBuild = {};
+  Smells Delicious!
+`;
 
-// folders inside carafe-packages-src with a Package.js file will be added to the object listing
-glob.sync(path.join(__dirname, 'carafe-packages-src/**/Package.js')).forEach((filePath) => {
-    packagesToBuild[filePath.replace('/Package.js', '').replace(/\\/g, '/').replace(/.*\//, '')] = filePath;
-});
+// Manifest of packages to be build
+let packagesToBuild = {
+    'Carafe': './src/app/Carafe.js'
+};
 
 module.exports = (env, options) => {
-    let outputPath = path.resolve(__dirname, 'public/carafe-packages-build');
+    let outputPath = path.resolve(__dirname, 'dist');
 
     let plugins = [
         new MiniCssExtractPlugin({
             filename: '[name]/[name].css',
             chunkFilename: '[name].css'
-        }),
-        new CopyWebpackPlugin([{
-            context: './carafe-packages-src/',
-            from: '**/Template.html',
-            to: '.',
-            force: true
-        }]),
-        new CopyWebpackPlugin([{
-            context: './carafe-packages-src/',
-            from: '**/*.json',
-            to: '.',
-            force: true
-        }], {
-            copyUnmodified: true
         })
     ];
 
     if (options.mode === 'production') {
-        outputPath = path.resolve(__dirname, './docs/carafe-packages-build/');
         plugins.push(
             new OptimizeCssAssetsPlugin({
                 assetNameRegExp: /\.css$/g,
                 cssProcessor: require('cssnano'),
-                cssProcessorOptions: { safe: true, discardComments: { removeAll: true } },
+                cssProcessorOptions: {
+                    safe: true,
+                    discardComments: {removeAll: true}
+                },
                 canPrint: true
             })
         );
@@ -54,19 +51,19 @@ module.exports = (env, options) => {
 
     plugins.unshift(new CleanWebpackPlugin([outputPath]));
 
+    console.log(hotCoffee);
     return {
         entry: packagesToBuild,
         devtool: 'source-map',
         resolve: {
             modules: [
-                path.join(__dirname, 'es6'),
-                path.join(__dirname, 'carafe-packages-src'),
+                path.join(__dirname, 'src'),
                 'node_modules'
             ]
         },
         output: {
             path: outputPath,
-            filename: '[name]/[name].bundle.js',
+            filename: '[name].js',
             library: 'Carafe',
             publicPath: '/',
         },
@@ -79,7 +76,16 @@ module.exports = (env, options) => {
                     exclude: /node_modules/,
                     loader: 'babel-loader',
                     query: {
-                        presets: ['es2015'],
+                        presets: [
+                            [
+                                'env',
+                                {
+                                    "targets": {
+                                        "ie": "11"
+                                    }
+                                }
+                            ]
+                        ],
                     },
                 },
                 // process css imports
@@ -100,7 +106,7 @@ module.exports = (env, options) => {
                     test: /\.(jpe?g|png|ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
                     loader: 'url-loader',
                 },
-                // process html imports - excluding out default template
+                // process html imports - excluding our default template
                 {
                     test: /Template\.html$/, loader: 'ignore-loader'
                 },
